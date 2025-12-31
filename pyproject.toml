@@ -1,0 +1,41 @@
+[tool.poetry]
+name = "talent8-mcp"
+version = "0.1.0"
+description = "MCP server for AWS Bedrock Knowledge Base job openings retrieval"
+authors = ["Oleksandr Vasyleiko"]
+readme = "README.md"
+packages = [{include = "src"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+mcp = {extras = ["cli"], version = "^1.2.0"}
+boto3 = "^1.40.0"
+pydantic = "^2.0.0"
+pydantic-settings = "^2.0.0"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.0.0"
+pytest-asyncio = "^0.24.0"
+pytest-cov = "^6.0.0"
+moto = {extras = ["bedrock-agent-runtime"], version = "^5.0.0"}
+python-dotenv = "^1.0.0"
+
+[tool.poetry.scripts]
+talent8-mcp = "src.server:main"
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = [
+    "--strict-markers",
+    "--strict-config",
+    "--cov=src",
+    "--cov-report=term-missing",
+]
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
